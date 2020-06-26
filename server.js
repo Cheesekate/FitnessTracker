@@ -7,7 +7,7 @@ const Workout = require("./models/workouts");
 const PORT = process.env.PORT || 3030;
 
 
-mongoose.connect(process.env.MOGODB_URI || "mongodb://localhost/workout", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
     useNewUrlParser: true
 });
 
