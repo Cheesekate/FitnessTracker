@@ -75,7 +75,7 @@ app.put("/api/workouts/:id", (req, res) => {
 
 
 
-app.post("/api/workouts", ({ body }, res) => {
+app.post("/api/workouts", (req, res) => {
     Workout.create(req.body)
         .then((data) => res.json(data))
         .catch((e) => console.error(e));
@@ -84,14 +84,12 @@ app.post("/api/workouts", ({ body }, res) => {
 
 
 app.get("/api/workouts/range", (req, res) => {
-    Workout.find({})
+    Workout.find()
         .limit(7)
         .then((workout) => res.json(workout))
         .catch((e) => console.error(e));
     console.log(req.body);
 });
-
-
 app.listen(PORT, function () {
     console.log(`App running on port ${PORT}!`);
 });
