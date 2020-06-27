@@ -6,9 +6,8 @@ const Workout = require("./models/workouts");
 
 const PORT = process.env.PORT || 3030;
 
-
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-    useNewUrlParser: true
+    useNewUrlParser: true,
 });
 
 const app = express();
@@ -31,28 +30,27 @@ moongoose.connect(process.env.MONGODB_URI || MONGODB HEROKU
 */
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.get("/exercise", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'exercise.html'));
+    res.sendFile(path.join(__dirname, "public", "exercise.html"));
 });
 
 app.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'stats.html'));
+    res.sendFile(path.join(__dirname, "public", "stats.html"));
 });
-
 
 app.get("/api/workouts", (req, res) => {
     Workout.find({})
         .sort({ date: -1 })
         .then(dbWorkout => {
             res.json(dbWorkout);
-        }).catch(err => {
+        })
+        .catch(err => {
             res.status(400).json(err);
         });
 });
-
 
 app.put("/api/workouts/:id", (req, res) => {
     Workout.findByIdAndUpdate(
@@ -74,20 +72,26 @@ app.put("/api/workouts/:id", (req, res) => {
         });
 });
 
+
+
+
 app.post("/api/workouts", ({ body }, res) => {
     Workout.create(req.body)
         .then((data) => res.json(data))
-        .catch(e => console.error(e))
+        .catch((e) => console.error(e));
 });
+
 
 
 app.get("/api/workouts/range", (req, res) => {
-    Workout.find()
+    Workout.find({})
         .limit(7)
-        .then(workout => res.json(workout))
-        .catch(e => console.error(e))
-    console.log(req.body)
+        .then((workout) => res.json(workout))
+        .catch((e) => console.error(e));
+    console.log(req.body);
 });
+
+
 app.listen(PORT, function () {
     console.log(`App running on port ${PORT}!`);
 });
